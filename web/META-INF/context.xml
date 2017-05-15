@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context path="/">
+    <Resource name="jdbc/hcalifornia"
+
+              auth="Container"
+
+              type="javax.sql.DataSource"
+
+              username="root"
+
+              password="themachinist.23"
+
+              driverClassName="com.mysql.jdbc.Driver"
+
+              url="jdbc:mysql://://localhost:3306/hcalifornia"
+
+              maxActive="15"
+
+              maxIdle="3"/>
+</Context>
