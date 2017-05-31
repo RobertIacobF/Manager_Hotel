@@ -3,61 +3,119 @@ package Server.Repository;
 import Server.Model.User;
 
 import javax.servlet.http.HttpServlet;
+import javax.swing.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
-/**
- * Created by Robert Iacob on 14.05.2017.
- */
-public class RepUser extends HttpServlet implements IRepUser {
-    //TODO adauga, sterge, update useri, indiferent de tip
+public class RepUser {
+    Connection conn;
+    PreparedStatement statement = null;
+    ResultSet result = null;
 
-    private static RepUser repUserInstance = null;
-
-    private RepUser() { }
-
-    public static RepUser getRepUserInstance() {
-        if(repUserInstance == null)
-            repUserInstance = new RepUser();
-        return repUserInstance;
+    public RepUser() {
+        conn = DatabaseConnection.connToDB();
     }
 
-    @Override
-    public void createUser(User newUser) {
-        String addSQL = "insert into hotel_customers (username, password, name, surname, cnp, ci, nrtel, email)" + "values(?, ?, ?, ?, ?, ?, ?, ?)";
-        DatabaseConnection databaseConnection = DatabaseConnection.getDatabaseConnection();
+    public void insertUser(User user)  {
+        try {
+            String insertQuery = "insert into user" + "('" + "name" + "'," + "'" + "address" + "','" + "phone" + "','" + "type" + "')"
+                    + " values('"
+                    + user.getUsername() + "','"
+                    + user.getAddress() + "'" + ",'"
+                    + user.getPhone_no() + "'" + ",'"
+                    + user.getType() + "'"
+                    + ")";
 
-        try(Connection connection = (Connection) this.getServletContext().getAttribute("connection");
-            PreparedStatement preparedStatement = connection.prepareStatement(addSQL))
-        {
-            /*preparedStatement.setString(1, username);
-            preparedStatement.setString(2, password);
-            preparedStatement.setString(3, name);
-            preparedStatement.setString(4, surname);
-            preparedStatement.setString(5, cnp);
-            preparedStatement.setString(6, ci);
-            preparedStatement.setString(7, nrtel);
-            preparedStatement.setString(8, email);
-            preparedStatement.execute();*/
+            statement = conn.prepareStatement(insertQuery);
+            statement.execute();
 
-        } catch (SQLException e) {
-            e.printStackTrace();
+            //TODO AICI TREBUIE AFISARE IN WEB, UN WEB ALLERT;
+            //JOptionPane.showMessageDialog(null, "successfully inserted new Customer");
+
+        }
+        catch (SQLException e) {
+            //TODO AICI TREBUIE AFISARE IN WEB, UN WEB ALLERT;
+            //JOptionPane.showMessageDialog(null, e.toString() + "\n" + "InsertQuery Failed");
+        }
+        finally {
+            closeStatementOnly();
         }
     }
 
-    @Override
-    public User readUser(String username) {
-        return null;
+    public void updateUser(User user) {
+        try {
+            String updateQuery = "update userInfo set name = '"
+                    + user.getUsername() + "',"
+                    + "address = '" + user.getAddress() + "',"
+                    + "phone = '" + user.getPhone_no() + "',"
+                    + "type = '" + user.getType() + "' where user_id= "
+                    + user.getUserId();
+
+            statement = conn.prepareStatement(updateQuery);
+            statement.execute();
+
+            //TODO AICI TREBUIE AFISARE IN WEB, UN WEB ALLERT;
+            //JOptionPane.showMessageDialog(null, "successfully updated new Customer");
+        }
+        catch (SQLException e) {
+            //TODO AICI TREBUIE AFISARE IN WEB, UN WEB ALLERT;
+            //JOptionPane.showMessageDialog(null, e.toString() + "\n" + "Update query Failed");
+        }
+        finally {
+            closeStatementOnly();
+        }
     }
 
-    @Override
-    public void updateUser(String username, User newUserModel) {
+    public void deleteUser(int userId) {
+        try {
+            String deleteQuery = "delete from userInfo where user_id=" + userId;
+            statement = conn.prepareStatement(deleteQuery);
+            statement.execute();
 
+            //TODO AICI TREBUIE AFISARE IN WEB, UN WEB ALLERT;
+            //JOptionPane.showMessageDialog(null, "Deleted user");
+        }
+        catch (SQLException e) {
+            //TODO AICI TREBUIE AFISARE IN WEB, UN WEB ALLERT;
+            //JOptionPane.showMessageDialog(null, e.toString() + "\n" + "Delete query Failed");
+        }
+        finally {
+            closeStatementOnly();
+        }
     }
 
-    @Override
-    public void deleteUser(String username) {
+    public ResultSet getAllUsers() {
+        try {
+            String query = "select * from userInfo";
+            statement = conn.prepareStatement(query);
+            result = statement.executeQuery();
+        }
+        catch (SQLException e) {
+            //TODO AICI TREBUIE AFISARE IN WEB, UN WEB ALLERT;
+            //JOptionPane.showMessageDialog(null, e.toString() + "\n error coming from returning all customer DB Operation");
+        }
+        return result;
+    }
 
+    public void closeAll() {
+        try {
+            statement.close();
+            result.close();
+        }
+        catch (SQLException e) {
+            System.err.print(e.toString() + " >> CLOSING");
+        }
+    }
+
+    public void closeStatementOnly() {
+        try {
+            statement.close();
+            conn.close();
+        }
+        catch (SQLException e) {
+            System.err.print(e.toString() + " >> CLOSING");
+        }
     }
 }

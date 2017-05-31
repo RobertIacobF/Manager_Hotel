@@ -12,9 +12,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-/**
- * Created by Robert Iacob on 16.05.2017.
- */
 public class ServletCustomer extends HttpServlet {
     @Resource (name="hcalifornia")
     private DataSource res;
@@ -39,8 +36,8 @@ public class ServletCustomer extends HttpServlet {
         String ci = request.getParameter("ci");
         String nrtel = request.getParameter("nrtel");
         String email = request.getParameter("email");
-        RequestDispatcher dispatcher = //lab 9
-    }1
+        //RequestDispatcher dispatcher = //lab 9
+    }
 
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
