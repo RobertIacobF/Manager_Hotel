@@ -86,6 +86,20 @@ public class RepUser {
         }
     }
 
+
+    public int getNoAllUsers(){
+        return 0;
+    }
+
+    public int getNoAllCustomers(){
+        return 0;
+    }
+
+    public int getNoAllEmployees(){
+        return 0;
+    }
+
+
     public ResultSet getAllUsers() {
         try {
             String query = "select * from userInfo";
@@ -96,6 +110,23 @@ public class RepUser {
             //TODO AICI TREBUIE AFISARE IN WEB, UN WEB ALLERT;
             //JOptionPane.showMessageDialog(null, e.toString() + "\n error coming from returning all customer DB Operation");
         }
+        return result;
+    }
+
+    public ResultSet getAllCustomers(){
+        return result;
+    }
+
+    public ResultSet getAllEmployees(){
+        return result;
+    }
+
+    public ResultSet getAllAdmins(){
+        return result;
+    }
+
+
+    public ResultSet searchCustomerById(String customerID){
         return result;
     }
 

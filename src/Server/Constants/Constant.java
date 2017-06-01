@@ -12,14 +12,6 @@ public class Constant {
         simpleUser, receptionist, admin;
     }
 
-    public enum RoomProp {
-        singleRoom, twinRoom, suiteRoom, doubleRoom;
-    }
-
-    public enum RoomOptions {
-        jacuzzi, roomService, pool, TV, airCond, fridge, balcony, bathroom;
-    }
-
     public enum Messages{
         freeClean, freeUnclean, busyUnclean, busyClean;
     }

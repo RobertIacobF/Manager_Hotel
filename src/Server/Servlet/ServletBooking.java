@@ -26,4 +26,6 @@ public class ServletBooking extends HttpServlet {
     public void init() throws ServletException {
         super.init();
     }
+
+
 }

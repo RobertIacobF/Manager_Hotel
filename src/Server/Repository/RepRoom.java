@@ -10,6 +10,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class RepRoom {
+    //TODO toate camerele cu frigider, tv, baie in camera, wifi, cele libere, cele libere de la o anumita data
+
     Connection conn;
     PreparedStatement statement = null;
     ResultSet result = null;
@@ -90,6 +92,7 @@ public class RepRoom {
         }
     }
 
+
     public ResultSet getRooms() {
         try {
             String query = "select * from room";
@@ -106,7 +109,7 @@ public class RepRoom {
         return result;
     }
 
-    public int getNoOfRooms() {
+    public int getNoRooms() {
         int rooms = -1;
         try {
             String query = "select count(room_no)  as noRoom from room";
@@ -126,6 +129,14 @@ public class RepRoom {
         return rooms;
     }
 
+    public ResultSet getRoomsByStatus(String roomStatus){
+        return result;
+    }
+
+    public ResultSet getARoomByNo(int roomNo){
+        return result;
+    }
+
     public ResultSet getAllRoomNames() {
         try {
             String query = "select room_no from room";
@@ -139,6 +150,59 @@ public class RepRoom {
         finally {
             closeAll();
         }
+        return result;
+    }
+
+    public ResultSet getARoomDetails(int roomNo){
+        //camera ocupata, camera eliberata dar necuratata, camera libera)
+        return result;
+    }
+
+    public ResultSet getRoomsFromFloor(int floor){
+        try {
+            String query = "";
+            statement = conn.prepareStatement(query);
+            result = statement.executeQuery();
+        }
+        catch (SQLException ex) {
+            //TODO AICI TREBUIE AFISARE IN WEB, UN WEB ALLERT;
+            //JOptionPane.showMessageDialog(null, ex.toString() + "\n error coming from returning all Room_No  ROOM DB Operation");
+        }
+        finally {
+            closeAll();
+        }
+        return result;
+    }
+
+    public int getNoRoomsFromFloor(){
+        return 0;
+    }
+
+    public ResultSet searchRoomsByPrice(float price){
+        try {
+            String query = "1";
+            statement = conn.prepareStatement(query);
+            result = statement.executeQuery();
+        }
+        catch (SQLException ex) {
+            //TODO AICI TREBUIE AFISARE IN WEB, UN WEB ALLERT;
+            //JOptionPane.showMessageDialog(null, ex.toString() + "\n error coming from returning all Room_No  ROOM DB Operation");
+        }
+        finally {
+            closeAll();
+        }
+        return result;
+    }
+
+    public ResultSet searchRoomsByType(String type){
+        return result;
+    }
+
+    public ResultSet searchRoomsByOption(String option){
+        return result;
+    }
+
+    public ResultSet searchRoomsByStatus(String status){
         return result;
     }
 

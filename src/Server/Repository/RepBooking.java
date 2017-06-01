@@ -85,7 +85,7 @@ public class RepBooking {
         }
     }
 
-    public ResultSet getBookingInformation() {
+    public ResultSet getAllBookingInformation() {
         try {
             String query = "select * from booking";
             statement = conn.prepareStatement(query);
@@ -101,7 +101,7 @@ public class RepBooking {
         return result;
     }
 
-    public ResultSet getBooking(int bookingId) {
+    public ResultSet getABooking(int bookingId) {
         try {
             String query = "select * from booking where booking_id = " + bookingId;
             statement = conn.prepareStatement(query);
